@@ -32,7 +32,7 @@ async function start() {
     const codespaceName = process.env.CODESPACE_NAME;
     console.log(`Octofit Tracker API listening on http://localhost:${PORT}`);
     if (codespaceName) {
-      console.log(`Codespaces public API URL: https://${codespaceName}-${PORT}.app.github.dev`);
+      console.log(`Codespaces public API URL: https://${codespaceName}-8000.app.github.dev`);
     }
   });
 }
