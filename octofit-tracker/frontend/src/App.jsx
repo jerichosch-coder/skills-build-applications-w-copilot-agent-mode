@@ -5,14 +5,14 @@ import Leaderboard from './components/Leaderboard.jsx'
 import Teams from './components/Teams.jsx'
 import Users from './components/Users.jsx'
 import Workouts from './components/Workouts.jsx'
-import { apiFetch } from './api.js'
+import { apiFetch, apiBaseUrl } from './api.js'
 import './App.css'
 
 function App() {
   const [summary, setSummary] = useState({ users: 0, activities: 0, teams: 0 })
 
   useEffect(() => {
-    Promise.all([apiFetch('/api/users/'), apiFetch('/api/activities/'), apiFetch('/api/teams/')])
+    Promise.all([apiFetch(`${apiBaseUrl}/api/users/`), apiFetch(`${apiBaseUrl}/api/activities/`), apiFetch(`${apiBaseUrl}/api/teams/`)])
       .then(([users, activities, teams]) => setSummary({ users: users.length, activities: activities.length, teams: teams.length }))
       .catch(() => {})
   }, [])

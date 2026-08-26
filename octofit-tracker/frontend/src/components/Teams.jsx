@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { apiFetch } from '../api.js';
 import ResourceState from './ResourceState.jsx';
 
+const teamsCodespaceName = import.meta.env.VITE_CODESPACE_NAME;
+const teamsEndpoint = teamsCodespaceName
+  ? `https://${teamsCodespaceName}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/';
+
 export default function Teams() {
   const [teams, setTeams] = useState([]);
   const [state, setState] = useState({ loading: true, error: '' });
 
   useEffect(() => {
-    apiFetch('/api/teams/')
+    apiFetch(teamsEndpoint)
       .then((data) => setTeams(data))
       .catch(() => setState({ loading: false, error: 'Teams could not be loaded.' }))
       .finally(() => setState((current) => ({ ...current, loading: false })));

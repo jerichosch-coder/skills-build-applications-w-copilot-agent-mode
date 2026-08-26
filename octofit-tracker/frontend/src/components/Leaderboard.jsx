@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { apiFetch } from '../api.js';
 import ResourceState from './ResourceState.jsx';
 
+const leaderboardCodespaceName = import.meta.env.VITE_CODESPACE_NAME;
+const leaderboardEndpoint = leaderboardCodespaceName
+  ? `https://${leaderboardCodespaceName}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/';
+
 export default function Leaderboard() {
   const [entries, setEntries] = useState([]);
   const [state, setState] = useState({ loading: true, error: '' });
 
   useEffect(() => {
-    apiFetch('/api/leaderboard/')
+    apiFetch(leaderboardEndpoint)
       .then((data) => setEntries(data))
       .catch(() => setState({ loading: false, error: 'Leaderboard could not be loaded.' }))
       .finally(() => setState((current) => ({ ...current, loading: false })));

@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { apiFetch } from '../api.js';
 import ResourceState from './ResourceState.jsx';
 
+const workoutsCodespaceName = import.meta.env.VITE_CODESPACE_NAME;
+const workoutsEndpoint = workoutsCodespaceName
+  ? `https://${workoutsCodespaceName}-8000.app.github.dev/api/workouts/`
+  : 'http://localhost:8000/api/workouts/';
+
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([]);
   const [state, setState] = useState({ loading: true, error: '' });
 
   useEffect(() => {
-    apiFetch('/api/workouts/')
+    apiFetch(workoutsEndpoint)
       .then((data) => setWorkouts(data))
       .catch(() => setState({ loading: false, error: 'Workouts could not be loaded.' }))
       .finally(() => setState((current) => ({ ...current, loading: false })));
