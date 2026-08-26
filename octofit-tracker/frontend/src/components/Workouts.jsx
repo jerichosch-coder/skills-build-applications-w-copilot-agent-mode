@@ -13,7 +13,9 @@ export default function Workouts() {
       .finally(() => setState((current) => ({ ...current, loading: false })));
   }, []);
 
-  return <ResourceState {...state}><div className="workout-grid">
-    {workouts.map((workout) => <article className="workout-item" key={workout._id}><div className="workout-top"><span className="eyebrow">{workout.difficulty}</span><span>{workout.durationMinutes} min</span></div><h3>{workout.name}</h3><p>{workout.description}</p><div className="exercise-line">{workout.exercises?.slice(0, 3).join('  /  ')}</div></article>)}
-  </div></ResourceState>;
+  return <ResourceState {...state}>
+    <div className="table-wrap"><table className="tracker-table"><thead><tr><th>Workout</th><th>Difficulty</th><th>Duration</th><th>Description</th></tr></thead><tbody>
+      {workouts.map((workout) => <tr key={workout._id}><td className="strong">{workout.name}</td><td>{workout.difficulty ?? '-'}</td><td>{workout.durationMinutes ? `${workout.durationMinutes} min` : '-'}</td><td>{workout.description ?? '-'}</td></tr>)}
+    </tbody></table></div>
+  </ResourceState>;
 }
